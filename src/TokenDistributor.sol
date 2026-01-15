@@ -130,7 +130,7 @@ contract TokenDistributor {
             shape: "Investor Vesting"
         });
 
-        // Add Foundation stream here: TODO
+        // Add Foundation stream here: TODO 
         // Stream 2: Foundation - 30%, no cliff, 3 year linear vesting
 
         // Create all streams in one transaction
