@@ -13,7 +13,6 @@ import {TokenDistributor} from "../src/TokenDistributor.sol";
 /// @title TokenDistributionTest
 /// @notice Tests for the Sablier Workshop token distribution
 contract TokenDistributionTest is Test {
-
     // Sepolia Sablier addresses
     address constant SABLIER_LOCKUP = 0x6b0307b4338f2963A62106028E3B074C2c0510DA;
     address constant SABLIER_BATCH_LOCKUP = 0x44Fd5d5854833975E5Fc80666a10cF3376C088E0;

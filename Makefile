@@ -53,6 +53,7 @@ deploy-sepolia:
 		--rpc-url $(SEPOLIA_RPC_URL) \
 		--broadcast \
 		--account $(ACCOUNT_NAME) \
+		--verify \
 		-vvv
 
 # Create vesting streams (requires env vars: TOKEN_ADDRESS, DISTRIBUTOR_ADDRESS, TEAM_ADDRESS, INVESTOR_ADDRESS, FOUNDATION_ADDRESS)
@@ -62,7 +63,14 @@ create-streams:
 		--rpc-url $(SEPOLIA_RPC_URL) \
 		--broadcast \
 		--account $(ACCOUNT_NAME) \
+		--verify \
+		--etherscan-api-key $(ETHERSCAN_API_KEY) \
 		-vvv
+
+# Generate Merkle tree root (modify recipients in script/GenerateMerkle.s.sol)
+.PHONY: generate-merkle
+generate-merkle:
+	forge script script/GenerateMerkle.s.sol:GenerateMerkleTree -vvv
 
 # Create airdrop (requires env vars: TOKEN_ADDRESS, AIRDROP_CAMPAIGN_ADDRESS, MERKLE_ROOT, RECIPIENT_COUNT)
 .PHONY: create-airdrop
@@ -71,6 +79,8 @@ create-airdrop:
 		--rpc-url $(SEPOLIA_RPC_URL) \
 		--broadcast \
 		--account $(ACCOUNT_NAME) \
+		--verify \
+		--etherscan-api-key $(ETHERSCAN_API_KEY) \
 		-vvv
 
 # Run local fork of Sepolia
@@ -94,5 +104,6 @@ help:
 	@echo ""
 	@echo "  make deploy-sepolia - Deploy contracts to Sepolia"
 	@echo "  make create-streams - Create vesting streams"
+	@echo "  make generate-merkle - Generate Merkle tree root for airdrop"
 	@echo "  make create-airdrop - Create airdrop campaign"
 	@echo "  make fork           - Run local Anvil fork of Sepolia"

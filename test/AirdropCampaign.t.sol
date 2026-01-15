@@ -62,10 +62,8 @@ contract AirdropCampaignTest is Test {
         token = new ERC20("Workshop Token", "WSHP");
         token.mint(deployer, 10_000e18);
 
-        campaign = new AirdropCampaign(
-            ISablierFactoryMerkleInstant(SABLIER_FACTORY_MERKLE_INSTANT),
-            IERC20(address(token))
-        );
+        campaign =
+            new AirdropCampaign(ISablierFactoryMerkleInstant(SABLIER_FACTORY_MERKLE_INSTANT), IERC20(address(token)));
 
         vm.stopPrank();
     }

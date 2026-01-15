@@ -18,7 +18,7 @@ contract TokenDistributor {
     uint128 public constant TEAM_AMOUNT = 1000e18; // 10% - 1000 tokens
     uint128 public constant INVESTOR_AMOUNT = 2000e18; // 20% - 2000 tokens
     uint128 public constant FOUNDATION_AMOUNT = 3000e18; // 30% - 3000 tokens
-    uint128 public constant TOTAL_LOCKUP_AMOUNT = 6000e18; // 60% total for lockup
+    uint128 public constant TOTAL_LOCKUP_AMOUNT = 6000e18; // Team, Investors and Foundation will be locked up.
 
     /*//////////////////////////////////////////////////////////////////////////
                                    STORAGE
@@ -130,20 +130,8 @@ contract TokenDistributor {
             shape: "Investor Vesting"
         });
 
+        // Add Foundation stream here: TODO
         // Stream 2: Foundation - 30%, no cliff, 3 year linear vesting
-        batch[2] = BatchLockup.CreateWithDurationsLL({
-            sender: msg.sender,
-            recipient: foundationAddress,
-            depositAmount: FOUNDATION_AMOUNT,
-            cancelable: true,
-            transferable: false,
-            durations: LockupLinear.Durations({
-                cliff: 0, // No cliff
-                total: 3 * 365 days // 3 year total
-            }),
-            unlockAmounts: LockupLinear.UnlockAmounts({start: 0, cliff: 0}),
-            shape: "Foundation Vesting"
-        });
 
         // Create all streams in one transaction
         streamIds = SABLIER_BATCH_LOCKUP.createWithDurationsLL(SABLIER_LOCKUP, TOKEN, batch);

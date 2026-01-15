@@ -46,9 +46,16 @@ export FOUNDATION_ADDRESS=<wallet>
 make create-streams
 
 # Create airdrop (optional)
+# Step 1: Generate Merkle tree root
+# Edit script/GenerateMerkle.s.sol with your recipients, then:
+make generate-merkle
+# Copy the MERKLE_ROOT and RECIPIENT_COUNT from the output
+
+# Step 2: Create the airdrop
+export TOKEN_ADDRESS=<from deploy>
 export AIRDROP_CAMPAIGN_ADDRESS=<from deploy>
-export MERKLE_ROOT=<generated root>
-export RECIPIENT_COUNT=<number>
+export MERKLE_ROOT=<from generate-merkle output>
+export RECIPIENT_COUNT=<from generate-merkle output>
 make create-airdrop
 ```
 

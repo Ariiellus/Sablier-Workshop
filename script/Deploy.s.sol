@@ -13,7 +13,6 @@ import {AirdropCampaign} from "../src/AirdropCampaign.sol";
 import {console2} from "forge-std/console2.sol";
 
 contract DeployWorkshop is Script {
-
     // Sepolia Testnet Addresses (Sablier v3.0)
     address constant SABLIER_LOCKUP_SEPOLIA = 0x6b0307b4338f2963A62106028E3B074C2c0510DA;
     address constant SABLIER_BATCH_LOCKUP_SEPOLIA = 0x44Fd5d5854833975E5Fc80666a10cF3376C088E0;
@@ -92,9 +91,8 @@ contract CreateAirdrop is Script {
         vm.startBroadcast();
 
         token.approve(airdropCampaignAddress, 4000e18);
-        address airdropAddress = address(
-            campaign.createAirdrop(merkleRoot, recipientCount, "Community Airdrop", "", 90)
-        );
+        address airdropAddress =
+            address(campaign.createAirdrop(merkleRoot, recipientCount, "Community Airdrop", "", 90));
 
         vm.stopBroadcast();
 
