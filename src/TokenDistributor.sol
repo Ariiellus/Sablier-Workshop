@@ -2,8 +2,10 @@
 pragma solidity ^0.8.26;
 
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+
 import {ISablierLockup} from "@sablier/lockup/src/interfaces/ISablierLockup.sol";
 import {ISablierBatchLockup} from "@sablier/lockup/src/interfaces/ISablierBatchLockup.sol";
+
 import {Lockup} from "@sablier/lockup/src/types/Lockup.sol";
 import {LockupLinear} from "@sablier/lockup/src/types/LockupLinear.sol";
 import {BatchLockup} from "@sablier/lockup/src/types/BatchLockup.sol";
@@ -105,13 +107,13 @@ contract TokenDistributor {
             sender: msg.sender,
             recipient: teamAddress,
             depositAmount: TEAM_AMOUNT,
-            cancelable: true,
+            cancelable: false,
             transferable: false,
             durations: LockupLinear.Durations({
                 cliff: 365 days, // 1 year cliff
                 total: 4 * 365 days // 4 year total
             }),
-            unlockAmounts: LockupLinear.UnlockAmounts({start: 0, cliff: 0}),
+            unlockAmounts: LockupLinear.UnlockAmounts({start: 0, cliff: 100e18}),
             shape: "Team Vesting"
         });
 
@@ -120,7 +122,7 @@ contract TokenDistributor {
             sender: msg.sender,
             recipient: investorAddress,
             depositAmount: INVESTOR_AMOUNT,
-            cancelable: true,
+            cancelable: false,
             transferable: false,
             durations: LockupLinear.Durations({
                 cliff: 180 days, // 6 month cliff
@@ -130,7 +132,7 @@ contract TokenDistributor {
             shape: "Investor Vesting"
         });
 
-        // Add Foundation stream here: TODO 
+        // Add Foundation stream here: TODO done
         // Stream 2: Foundation - 30%, no cliff, 3 year linear vesting
 
         // Create all streams in one transaction

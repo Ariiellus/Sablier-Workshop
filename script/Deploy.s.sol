@@ -29,6 +29,8 @@ contract DeployWorkshop is Script {
         address sablierBatchLockup;
         address sablierFactoryMerkleInstant;
 
+        address deployer = "DeployerPublicAddress";
+
         if (chainId == 11155111) {
             sablierLockup = SABLIER_LOCKUP_SEPOLIA;
             sablierBatchLockup = SABLIER_BATCH_LOCKUP_SEPOLIA;
@@ -40,7 +42,7 @@ contract DeployWorkshop is Script {
         vm.startBroadcast();
 
         token = new ERC20("Workshop Token", "WSHP");
-        token.mint(msg.sender, 10_000e18);
+        token.mint(deployer, 10_000e18);
 
         tokenDistributor = new TokenDistributor(
             ISablierLockup(sablierLockup), ISablierBatchLockup(sablierBatchLockup), IERC20(address(token))
@@ -67,7 +69,6 @@ contract CreateVestingStreams is Script {
         TokenDistributor distributor = TokenDistributor(distributorAddress);
 
         vm.startBroadcast();
-
         token.approve(distributorAddress, 6000e18);
         uint256[] memory streamIds =
             distributor.createAllVestingStreams(teamAddress, investorAddress, foundationAddress);

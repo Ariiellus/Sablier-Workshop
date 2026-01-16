@@ -17,6 +17,8 @@ contract ERC20 {
 
     uint256 public totalSupply; // needs to be updated every time a new token is minted or burned
 
+    uint256 public maxSupply;
+
     // the address x allows address y spend n amount of tokens
     mapping(address => mapping(address => uint256)) public allowance;
 
@@ -29,6 +31,7 @@ contract ERC20 {
         name = name_;
         symbol = symbol_;
         decimals = 18;
+        maxSupply = 10000 * 10**18;
 
         owner = msg.sender;
     }
@@ -41,6 +44,9 @@ contract ERC20 {
         require(msg.sender == owner, "only owner can create tokens");
         require(amount > 0, "amount must be greater than 0");
         require(to != address(0), "cannot mint to address(0)");
+
+        require(totalSupply + amount <= maxSupply, "max supply exceeded");
+        
         totalSupply += amount;
         balanceOf[to] += amount;
         emit Transfer(address(0), to, amount);
